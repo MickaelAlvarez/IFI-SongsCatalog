@@ -12,4 +12,7 @@ import java.util.List;
 public interface SongServiceInterface {
     List<Song> findAllSongs();
     Song findById(long id);
+    List<Song> deleteSong(long id);
+    List<Song> addSong(String name, String album, String singer);
+    List<Song> addOrReplaceSong(long id, String name, String album, String singer);
 }

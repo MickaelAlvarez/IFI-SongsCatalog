@@ -42,4 +42,31 @@ public class SongsCatalogController {
         }
         return new ResponseEntity<>(song, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/song/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Song>> deleteSong(@PathVariable("id") long id) {
+        List<Song> songs = songService.deleteSong(id);
+        if (songs.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/song/{name}/{album}/{singer}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Song>> addSong(@PathVariable("name") String name, @PathVariable("album") String album, @PathVariable("singer") String singer) {
+        List<Song> songs = songService.addSong(name, album, singer);
+        if (songs.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/song/{id}/{name}/{album}/{singer}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Song>> addOrReplaceSong(@PathVariable("id") long id, @PathVariable("name") String name, @PathVariable("album") String album, @PathVariable("singer") String singer) {
+        List<Song> songs = songService.addOrReplaceSong(id, name, album, singer);
+        if (songs.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
 }

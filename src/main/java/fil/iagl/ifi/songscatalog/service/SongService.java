@@ -33,4 +33,52 @@ public class SongService implements SongServiceInterface {
         }
         return null;
     }
+
+	@Override
+	public List<Song> deleteSong(long id) {
+		Song toDelete = null;
+		
+		for(Song song : songs) {
+			if(song.getId() == id) {
+				toDelete = song;
+				break;
+			}
+		}
+		
+		if(toDelete != null) {
+			songs.remove(toDelete);
+		}
+		
+		return findAllSongs();
+	}
+
+	@Override
+	public List<Song> addSong(String name, String album, String singer) {
+		songs.add(new Song(counter.incrementAndGet(), name, album, singer));
+		return findAllSongs();
+	}
+
+	@Override
+	public List<Song> addOrReplaceSong(long id, String name, String album, String singer) {
+		Song existantSong = null;
+		
+		for(Song song : songs) {
+			if(song.getId() == id) {
+				existantSong = song;
+				break;
+			}
+		}
+		
+		Song song = new Song(id, name, album, singer);
+		
+		if(existantSong != null) {
+			songs.set(songs.indexOf(existantSong), song);
+		} else {
+			songs.add(song);
+		}
+		
+		return findAllSongs();
+	}
+	
+	
 }
